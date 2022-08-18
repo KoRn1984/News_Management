@@ -13,33 +13,18 @@ public class NewsServiceImpl implements INewsService{
 	private final INewsDao newsDao = DaoProvider.getInstance().getNewsDao();
 	
 	@Override
-	public void save() {
-		// TODO Auto-generated method stub		
-	}
-
-	@Override
-	public void find() {
-		// TODO Auto-generated method stub		
-	}
-
-	@Override
-	public void update() {
-		// TODO Auto-generated method stub		
-	}
-
-	@Override
 	public List<News> latestList(int count) throws ServiceException {		
 		try {
-			return newsDao.getLatestsList(5);
+			return newsDao.getLatestList(5);
 		} catch (NewsDaoException e) {
 			throw new ServiceException(e);
 		}
 	}
 
 	@Override
-	public List<News> list() throws ServiceException {
+	public List<News> newsList(Integer pageNumber, Integer pageSize) throws ServiceException {
 		try {
-			return newsDao.getList();
+			return newsDao.getNewsList(pageNumber, pageSize);
 		} catch (NewsDaoException e) {
 			throw new ServiceException(e);
 		}
@@ -52,5 +37,30 @@ public class NewsServiceImpl implements INewsService{
 		} catch (NewsDaoException e) {
 			throw new ServiceException(e);
 		}
+	}
+	
+	@Override
+	public boolean save(News news) throws ServiceException {
+		try {
+			if (newsDao.addNews(news) == 0) {
+				return false;
+			}
+			return true;
+		} catch (NewsDaoException e) {
+			throw new ServiceException(e);
+		}
+	}
+
+	@Override
+	public int update(News news, String login) throws ServiceException {
+		try {
+			return newsDao.updateNews(news);
+		} catch (NewsDaoException e) {
+			throw new ServiceException(e);
+		}
+	}
+	
+	@Override
+	public void find(String[] idNewses) throws ServiceException {		
 	}
 }

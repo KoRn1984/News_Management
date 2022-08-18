@@ -8,17 +8,19 @@
 </head>
 <body>
 <div class="body-title">
-	<a href="">News >></a> Latest News
+	<a href="controller?command=go_to_news_list">News >></a> Latest News
 </div>
 <form action="command.do?method=delete" method="post">
 	<c:forEach var="news" items="${requestScope.news}">
 		<div class="single-news-wrapper">
 			<div class="single-news-header-wrapper">
 				<div class="news-title">
-					<c:out value="${news.title}" />
+				<strong>
+					<c:out value="${news.titleNews}" />
+				</strong>
 				</div>
 				<div class="news-date">
-					<c:out value="${news.newsDate}" />
+					<c:out value="${news.dateNews}" />
 				</div>
 				<div class="news-content">
 					<c:out value="${news.briefNews}" />
@@ -26,11 +28,15 @@
 			</div>
 		</div>
 	</c:forEach>
+	<c:if test="${sessionScope.showNews eq 'not_show'}">
 	<div class="no-news">
 		<c:if test="${requestScope.news eq null}">
-        No news.
+		<font color="red">
+        No news for unregistered user!
+        </font>
 	    </c:if>
 	</div>
+	</c:if>
 </form>
 </body>
 </html>
